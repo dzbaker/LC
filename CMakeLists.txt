@@ -1,29 +1,5 @@
 project(CFS_LC C)
 
-include(CheckSourceCompiles)
-
-# Determine if math library required for "isnan" and "isfinite"
-check_source_compiles(
-  C
-  "#include <float.h>
-   #include <math.h>  
-   int main()
-   {
-     float FloatValue = 1.1f;
-     if (isnan(FloatValue) || !isfinite(FloatValue))
-        return 1;
-     else
-        return 0;
-  }"
-  HAS_MATH_LIB
-)
-
-# Add math library dependency if test code failed to compile and link
-if (NOT HAS_MATH_LIB)
-  message(STATUS "Adding math library dependency to lc app")
-  link_libraries(m)
-endif()
-
 set(APP_SRC_FILES
   fsw/src/lc_custom.c
   fsw/src/lc_app.c
